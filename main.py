@@ -11,13 +11,17 @@ def home():
     return {"Hello": "World from FastAPI"}
 
 @app.get("/hello/")
-def get_random():
+def aa():
     return { "data": "你好" }
     
-@app.get("/over/")
-def get_random():
+@app.get("/list/")
+def bb():
     return []
-    
+
+@app.get("/dict/")
+def ssss():
+    return {}
+
 # get random number between min(default:0) and max(default:9)
 @app.get("/random/")
 def get_random(min: Optional[int] = 0, max: Optional[int] = 9):
