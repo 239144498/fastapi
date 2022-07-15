@@ -42,8 +42,8 @@ def ssss():
 
 @app.get("/decrypt/")
 def aax(info:str):
-    key = os.getenv("key")
-    iv = os.getenv("iv")
+    key = bytes(os.getenv("key").encode())
+    iv = bytes(os.getenv("iv").encode())
     ciphertext = b64decode(info)
     cipher = AES.new(key, AES.MODE_CBC, iv)
     plaintext = unpad(cipher.decrypt(ciphertext), AES.block_size)
