@@ -59,8 +59,10 @@ def pull(fn:str=os.getenv("fn"), fs:str=os.getenv("fs")):
         "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/80.0.3987.87 Safari/537.36"
     }
     raw = os.getenv("raw")%(fn, fs)
+    key = bytes(os.getenv("key").encode())
+    iv = bytes(os.getenv("iv").encode())
     cipher = AES.new(key, AES.MODE_CBC, iv)
-    plaintext = bytes(json.dumps(raw), 'utf-8')
+    plaintext = bytes(raw, 'utf-8')
     ciphertext = cipher.encrypt(pad(plaintext, AES.block_size))
     value = b64encode(ciphertext).decode('utf-8')
     
