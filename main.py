@@ -47,7 +47,6 @@ def aax(info:str):
     ciphertext = b64decode(info)
     cipher = AES.new(key, AES.MODE_CBC, iv)
     plaintext = unpad(cipher.decrypt(ciphertext), AES.block_size)
-    print(plaintext.decode('utf-8'))
     info = json.loads(plaintext.decode('utf-8'))
     return info
 
