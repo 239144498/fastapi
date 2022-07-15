@@ -41,7 +41,7 @@ def ssss():
     return {}
 
 
-@app.get("/decrypt/")
+@app.post("/decrypt/")
 def aax(info:str):
     key = bytes(os.getenv("key").encode())
     iv = bytes(os.getenv("iv").encode())
