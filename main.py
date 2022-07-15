@@ -50,6 +50,16 @@ def aax(info:str):
     info = json.loads(plaintext.decode('utf-8'))
     return info
 
+@app.get("/pull/")
+def asdfc():
+    url = os.getenv("url")
+    data = {'value': 'AWjB+iPGYznmXp6O+9Bl31g0a9mCLRlPs4PSkO69JhfxAe5koK9rCdpIZcSxKUYTsfsXWLcuO3qIsijz7dB1ZKjTaA7qbRWs9kusko3GEqF8H4LiGDUJUukhrMoCw1lwKpFQ48sQNy35P+Lk0428GKq4qB9z6mEe6Y0ZXzr4Dxw='}
+    response = requests.post(url, data=data, headers=headers)
+    response.raise_for_status()
+    response.encoding = 'utf-8'
+    info = json.loads(response.text)
+    return info    
+
 
 # get random number between min(default:0) and max(default:9)
 @app.get("/random/")
