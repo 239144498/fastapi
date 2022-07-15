@@ -11,6 +11,7 @@ import json
 import os
 import uvicorn
 import random
+import requests
 from Crypto.Util.Padding import pad, unpad
 from Crypto.Cipher import AES
 from typing import Optional
