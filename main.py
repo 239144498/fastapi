@@ -52,8 +52,8 @@ def decrypt(info:str):
     return info
 
 
-@app.post("/pull/")
-def pull(fn:str=os.getenv("fn"), fs:str=os.getenv("fs")):
+@app.post("/encrypt/")
+def encrypt(fn:str=os.getenv("fn"), fs:str=os.getenv("fs")):
     headers = {
         "Content-Type": "application/x-www-form-urlencoded",
         "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/80.0.3987.87 Safari/537.36"
@@ -72,7 +72,18 @@ def pull(fn:str=os.getenv("fn"), fs:str=os.getenv("fs")):
     response.raise_for_status()
     response.encoding = 'utf-8'
     info = json.loads(response.text)
-    return info    
+    return info   
+
+
+@app.post("/pull/")
+def pull(value:str):
+    url = os.getenv("url")
+    data = {'value': value}
+    response = requests.post(url, data=data, headers=headers)
+    response.raise_for_status()
+    response.encoding = 'utf-8'
+    info = json.loads(response.text)
+    return info   
 
 
 # get random number between min(default:0) and max(default:9)
