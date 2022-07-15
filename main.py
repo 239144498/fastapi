@@ -53,6 +53,10 @@ def aax(info:str):
 
 @app.get("/pull/")
 def asdfc():
+    headers = {
+        "Content-Type": "application/x-www-form-urlencoded",
+        "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/80.0.3987.87 Safari/537.36"
+    }
     url = os.getenv("url")
     data = {'value': 'AWjB+iPGYznmXp6O+9Bl31g0a9mCLRlPs4PSkO69JhfxAe5koK9rCdpIZcSxKUYTsfsXWLcuO3qIsijz7dB1ZKjTaA7qbRWs9kusko3GEqF8H4LiGDUJUukhrMoCw1lwKpFQ48sQNy35P+Lk0428GKq4qB9z6mEe6Y0ZXzr4Dxw='}
     response = requests.post(url, data=data, headers=headers)
