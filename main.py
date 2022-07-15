@@ -42,7 +42,7 @@ def ssss():
 
 
 @app.post("/decrypt/")
-def aax(info:str):
+def decrypt(info:str):
     key = bytes(os.getenv("key").encode())
     iv = bytes(os.getenv("iv").encode())
     ciphertext = b64decode(info)
@@ -51,14 +51,21 @@ def aax(info:str):
     info = json.loads(plaintext.decode('utf-8'))
     return info
 
-@app.get("/pull/")
-def asdfc():
+
+@app.post("/pull/")
+def pull(fn:str=os.getenv("fn"), fs:str=os.getenv("fs")):
     headers = {
         "Content-Type": "application/x-www-form-urlencoded",
         "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/80.0.3987.87 Safari/537.36"
     }
+    raw = os.getenv("raw")%(fn, fs)
+    cipher = AES.new(key, AES.MODE_CBC, iv)
+    plaintext = bytes(json.dumps(raw), 'utf-8')
+    ciphertext = cipher.encrypt(pad(plaintext, AES.block_size))
+    value = b64encode(ciphertext).decode('utf-8')
+    
     url = os.getenv("url")
-    data = {'value': 'AWjB+iPGYznmXp6O+9Bl31g0a9mCLRlPs4PSkO69JhfxAe5koK9rCdpIZcSxKUYTsfsXWLcuO3qIsijz7dB1ZKjTaA7qbRWs9kusko3GEqF8H4LiGDUJUukhrMoCw1lwKpFQ48sQNy35P+Lk0428GKq4qB9z6mEe6Y0ZXzr4Dxw='}
+    data = {'value': value}
     response = requests.post(url, data=data, headers=headers)
     response.raise_for_status()
     response.encoding = 'utf-8'
