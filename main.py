@@ -15,7 +15,7 @@ import requests
 from Crypto.Util.Padding import pad, unpad
 from Crypto.Cipher import AES
 from typing import Optional
-from fastapi import FastAPI
+from fastapi import FastAPI, Form
 from base64 import b64encode, b64decode
 
 app = FastAPI()
@@ -42,7 +42,7 @@ def ssss():
 
 
 @app.post("/decrypt/")
-def decrypt(info:str):
+def decrypt(info:str = Form(...)):
     key = bytes(os.getenv("key").encode())
     iv = bytes(os.getenv("iv").encode())
     ciphertext = b64decode(info)
@@ -53,7 +53,7 @@ def decrypt(info:str):
 
 
 @app.post("/encrypt/")
-def encrypt(fn:str=os.getenv("fn"), fs:str=os.getenv("fs")):
+def encrypt(fn:str = Form(os.getenv("fn")), fs:str = Form(os.getenv("fs"))):
     headers = {
         "Content-Type": "application/x-www-form-urlencoded",
         "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/80.0.3987.87 Safari/537.36"
@@ -76,7 +76,7 @@ def encrypt(fn:str=os.getenv("fn"), fs:str=os.getenv("fs")):
 
 
 @app.post("/pull/")
-def pull(value:str):
+def pull(value:str = Form(...)):
     url = os.getenv("url")
     data = {'value': value}
     response = requests.post(url, data=data, headers=headers)
